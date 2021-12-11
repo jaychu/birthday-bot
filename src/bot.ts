@@ -1,6 +1,6 @@
 import { Intents, Interaction, Message } from "discord.js";
 import { Client } from "discordx";
-import {defaultConfig} from './constants'
+import { config } from './constants'
 
 const client = new Client({
      simpleCommand: {
@@ -42,4 +42,4 @@ client.once("ready", async () => {
 });
 
 
-client.login(defaultConfig.BOT_TOKEN); 
+client.login(config.BOT_TOKEN); 
