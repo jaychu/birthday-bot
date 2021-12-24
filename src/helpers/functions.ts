@@ -10,7 +10,7 @@ export async function addBirthday(interaction,month,day,year){
     if(checkBirthday){
         interaction.reply(`Hello there ${user.username}! Your birthday is already present!`);
       } else {
-        let addBirthdayCheck = AddBirthday(user.id,month,day,year);
+        let addBirthdayCheck = await AddBirthday(user.id,month,day,year);
         if(addBirthdayCheck){
           interaction.reply(`Hello there ${user.username}! I've recorded your birthday as ${month}/${day}`);
         } else {

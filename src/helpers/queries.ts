@@ -38,7 +38,7 @@ let pool = new Pool({
                 console.log(error);
                 responseBool = false;
             }
-            responseBool = true;
+            
             try {
                 resolve(responseBool)
             } catch ( e ){
