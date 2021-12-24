@@ -11,6 +11,10 @@ import {
     User,
   } from "discord.js";
 
+import {
+  addBirthday
+} from "../helpers/functions";
+
 @Discord()
 abstract class AppDiscord {
     @Slash("add-birthdate")
@@ -26,15 +30,11 @@ abstract class AppDiscord {
         description:"Day of your birthday (DD)"
       }) day: number,
       @SlashOption("year", { 
-        required: true,
         type: "STRING",
         description:"Year of your birthday (YYYY)"
       }) year: number,
       interaction: CommandInteraction
     ) {
-      let user = interaction.user;
-
-      interaction.reply(`Hello there ${user.username}! I've recorded your birthday as ${month}/${day}/${year}`);
-
+      addBirthday(interaction,month,day,year);
     }  
 }
