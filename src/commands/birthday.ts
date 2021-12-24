@@ -12,7 +12,8 @@ import {
   } from "discord.js";
 
 import {
-  addBirthday
+  addBirthday,
+  removeBirthday
 } from "../helpers/functions";
 
 @Discord()
@@ -36,5 +37,12 @@ abstract class AppDiscord {
       interaction: CommandInteraction
     ) {
       addBirthday(interaction,month,day,year);
+    }  
+
+    @Slash("remove-birthdate")
+    remove(
+      interaction: CommandInteraction
+    ) {
+      removeBirthday(interaction);
     }  
 }

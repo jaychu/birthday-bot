@@ -47,3 +47,21 @@ let pool = new Pool({
         })
     })
   }
+
+  export async function RemoveBirthday(userID){
+    let doesUserExist = false;
+    return new Promise(function(resolve, reject){
+        pool.query('DELETE FROM birthdays WHERE userid=($1)', [userID], (error, results) => {
+            if (error) {
+               console.log(error);
+               doesUserExist = false;
+            }
+            doesUserExist = true;
+            try {
+                resolve(doesUserExist)
+            } catch ( e ){
+                reject(e)
+            }
+        })
+    })
+  }
