@@ -14,7 +14,8 @@ import {
 import {
   addBirthday,
   removeBirthday,
-  updateBirthday
+  updateBirthday,
+  showBirthday
 } from "../helpers/functions";
 
 @Discord()
@@ -66,5 +67,12 @@ abstract class AppDiscord {
       interaction: CommandInteraction
     ) {
       updateBirthday(interaction,month,day,year);
+    }  
+
+    @Slash("show-birthdate")
+    show(
+      interaction: CommandInteraction
+    ) {
+      showBirthday(interaction);
     }  
 }

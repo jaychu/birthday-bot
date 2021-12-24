@@ -1,8 +1,10 @@
+import { parseISO, format } from 'date-fns';
 import {
     CheckBirthday,
     AddBirthday,
     RemoveBirthday,
-    UpdateBirthday
+    UpdateBirthday,
+    GetBirthday
 } from "../helpers/queries";
 
 export async function addBirthday(interaction,month,day,year){
@@ -43,4 +45,17 @@ export async function updateBirthday(interaction,month,day,year){
         interaction.reply(`Hello there ${user.username}! I've had an error and your birthday wasn't recorded.`);
       }
     }
+}
+
+export async function showBirthday(interaction){
+  let user = interaction.user;
+  let checkBirthday = await CheckBirthday(user.id);
+  if(checkBirthday){
+    let birthday = await GetBirthday(user.id);
+    let birthdayObj = JSON.parse(birthday);
+    let formattedDate = format(parseISO(birthdayObj.birthtimestamp),"MMMM dd");
+    interaction.reply(`Hi ${user.username}! Your birthday is on ${formattedDate}!`);
+  } else {
+    interaction.reply(`Sorry ${user.username}! Your birthday is not here!`);
+  }
 }

@@ -66,11 +66,6 @@ let pool = new Pool({
     })
   }
 
-//   UPDATE birthdays
-// SET birthtimestamp = '1900-05-13', updatedate = '2221-12-24 13:08:04.856' 
-// WHERE userid='214158950612860928';
-
-
 export async function UpdateBirthday(userID,month,day,year){
     if(year == null){
         year = "1900";
@@ -86,6 +81,23 @@ export async function UpdateBirthday(userID,month,day,year){
             
             try {
                 resolve(responseBool)
+            } catch ( e ){
+                reject(e)
+            }
+        })
+    })
+  }
+
+  export async function GetBirthday(userID){
+    return new Promise<string>(function(resolve, reject){
+        pool.query('SELECT * FROM birthdays WHERE userID=($1)', [userID], (error, results) => {
+            if (error) {
+               console.log(error);
+            }
+            try {
+                if(results.rows.length > 0){
+                    resolve(JSON.stringify(results.rows[0]));
+                }
             } catch ( e ){
                 reject(e)
             }
