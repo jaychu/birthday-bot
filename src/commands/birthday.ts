@@ -13,7 +13,8 @@ import {
 
 import {
   addBirthday,
-  removeBirthday
+  removeBirthday,
+  updateBirthday
 } from "../helpers/functions";
 
 @Discord()
@@ -44,5 +45,26 @@ abstract class AppDiscord {
       interaction: CommandInteraction
     ) {
       removeBirthday(interaction);
+    }  
+
+    @Slash("update-birthdate")
+    update(
+      @SlashOption("month", { 
+        required: true,
+        type: "STRING",
+        description:"Month of your birthday (MM)"
+      }) month: number,
+      @SlashOption("day", { 
+        required: true,
+        type: "STRING",
+        description:"Day of your birthday (DD)"
+      }) day: number,
+      @SlashOption("year", { 
+        type: "STRING",
+        description:"Year of your birthday (YYYY)"
+      }) year: number,
+      interaction: CommandInteraction
+    ) {
+      updateBirthday(interaction,month,day,year);
     }  
 }
