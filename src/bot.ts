@@ -1,13 +1,14 @@
-import { Intents, TextChannel } from "discord.js";
+import { Guild, Intents, Role, TextChannel } from "discord.js";
 import { Client } from "discordx";
 import { dirname, importx } from "@discordx/importer";
 import { config } from './constants'
+import { celebrateBirthday, removeBirthdayFromRole } from "./helpers/functions";
 
 const client = new Client({
      intents: [
       Intents.FLAGS.GUILDS,
       Intents.FLAGS.GUILD_MESSAGES,
-      Intents.FLAGS.GUILD_MEMBERS,      
+      Intents.FLAGS.GUILD_MEMBERS,
      ],
      // If you only want to use global commands only, comment this line
      botGuilds: [(client) => client.guilds.cache.map((guild) => guild.id)]
@@ -22,10 +23,11 @@ client.once("ready", async () => {
   });
   await client.initApplicationPermissions(true);
   console.log("Bot started");
-  const channel = await client.channels.fetch(config.CHANNEL_ID) as TextChannel;
-
-
-  channel.send("Hello World!");
+  const channel = client.channels.cache.get(config.CHANNEL_ID) as TextChannel;
+  const guild = client.guilds.cache.get(config.GUILD_ID) as Guild;
+  const role = guild.roles.cache.get(config.ROLE_ID) as Role;
+  removeBirthdayFromRole(role);
+  celebrateBirthday(channel, guild.members, role);
 });
 
 client.on("interactionCreate", (interaction) => {

@@ -1,10 +1,12 @@
 import { parseISO, format } from 'date-fns';
+import { TextChannel, GuildMemberManager, GuildMember, Role } from 'discord.js';
 import {
     CheckBirthday,
     AddBirthday,
     RemoveBirthday,
     UpdateBirthday,
-    GetBirthday
+    GetBirthday,
+    GetAllBirthdays
 } from "../helpers/queries";
 
 export async function addBirthday(interaction,month,day,year){
@@ -58,4 +60,27 @@ export async function showBirthday(interaction){
   } else {
     interaction.reply(`Sorry ${user.username}! Your birthday is not here!`);
   }
+}
+
+
+export async function celebrateBirthday(channel: TextChannel, users: GuildMemberManager, role: Role){
+
+  //channel.send("Let's celebrate a birthday!");
+  let birthdayList = await GetAllBirthdays();
+  let birthdayListObj = JSON.parse(birthdayList);
+
+  let userID = "214158950612860928";
+  // birthdayListObj.forEach(birthday => {
+    
+  // });
+  let member = await users.fetch(userID) as GuildMember;
+  //channel.send(`<@${userID}>, Happy birthday to you!`)
+  member.roles.add(role);
+  //console.log(users.cache)
+}
+
+export async function removeBirthdayFromRole(role: Role){
+    role.members.forEach((member) => { // Looping through the members of Role.
+      member.roles.remove(role);
+  });
 }
