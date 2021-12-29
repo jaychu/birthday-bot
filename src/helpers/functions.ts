@@ -1,5 +1,19 @@
-import { parseISO, format } from 'date-fns';
-import { TextChannel, GuildMemberManager, GuildMember, Role } from 'discord.js';
+import { 
+  messages 
+} from '../constants'
+
+import { 
+  parseISO, 
+  format 
+} from 'date-fns';
+
+import { 
+  TextChannel, 
+  GuildMemberManager, 
+  GuildMember, 
+  Role 
+} from 'discord.js';
+
 import {
     CheckBirthday,
     AddBirthday,
@@ -64,19 +78,26 @@ export async function showBirthday(interaction){
 
 
 export async function celebrateBirthday(channel: TextChannel, users: GuildMemberManager, role: Role){
-
-  //channel.send("Let's celebrate a birthday!");
   let birthdayList = await GetAllBirthdays();
   let birthdayListObj = JSON.parse(birthdayList);
+  let today = format( new Date(), 'MM/dd');
+  birthdayListObj.forEach(birthday => {
+    let formattedDate = format(parseISO(birthday.birthtimestamp),"MM/dd");
+    if(formattedDate==today){
+      sendMessageAndAssignRole(channel,users,role,birthday.userid);
+    }
+  });
+}
 
-  let userID = "214158950612860928";
-  // birthdayListObj.forEach(birthday => {
-    
-  // });
-  let member = await users.fetch(userID) as GuildMember;
-  //channel.send(`<@${userID}>, Happy birthday to you!`)
-  member.roles.add(role);
-  //console.log(users.cache)
+export async function sendMessageAndAssignRole(channel: TextChannel, users: GuildMemberManager, role: Role, userID: string){
+    let member = await users.fetch(userID) as GuildMember;
+    const min = 0;
+    let max = messages.birthday_messages.length;
+    let arbitrayNumber = Math.floor(Math.random() * (max - min) + min);
+    let message = messages.birthday_messages[arbitrayNumber].replace("{user}",`<@${userID}>`);
+    //channel.send(message)
+    console.log(message)
+    member.roles.add(role);
 }
 
 export async function removeBirthdayFromRole(role: Role){
