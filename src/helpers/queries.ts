@@ -104,3 +104,21 @@ export async function UpdateBirthday(userID,month,day,year){
         })
     })
   }
+
+  export async function GetAllBirthdays(){
+    let doesUserExist = false;
+    return new Promise<string>(function(resolve, reject){
+        pool.query('SELECT * FROM birthdays', [], (error, results) => {
+            if (error) {
+               console.log(error);
+               doesUserExist = false;
+            }
+            try {
+                resolve(JSON.stringify(results.rows))
+            } catch ( e ){
+                reject(e)
+            }
+        })
+    })
+  }
+  

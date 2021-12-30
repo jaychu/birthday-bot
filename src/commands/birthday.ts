@@ -4,11 +4,7 @@ import {
     SlashOption,
   } from "discordx";
 import {
-    Channel,
     CommandInteraction,
-    GuildMember,
-    Role,
-    User,
   } from "discord.js";
 
 import {
