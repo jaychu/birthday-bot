@@ -26,53 +26,73 @@ import {
 export async function addBirthday(interaction,month,day,year){
     let user = interaction.user;
     let checkBirthday = await CheckBirthday(user.id);
+    let message = "";
     if(checkBirthday){
-        interaction.reply(`Hello there ${user.username}! Your birthday is already present!`);
+      message = messages.add_birthday.duplicate_message.replace("{user}",`${user.username}`);        
+    } else {
+      let addBirthdayCheck = await AddBirthday(user.id,month,day,year);
+      if(addBirthdayCheck){
+        message = messages.add_birthday.confirmation_message.replace("{user}",`${user.username}`); 
       } else {
-        let addBirthdayCheck = await AddBirthday(user.id,month,day,year);
-        if(addBirthdayCheck){
-          interaction.reply(`Hello there ${user.username}! I've recorded your birthday as ${month}/${day}`);
-        } else {
-          interaction.reply(`Hello there ${user.username}! I've had an error and your birthday wasn't recorded.`);
-        }
+        message = messages.add_birthday.error_message.replace("{user}",`${user.username}`); 
       }
+    }
+    if(message!= ""){
+      interaction.reply(message);
+    }
+
 }
 
 export async function removeBirthday(interaction){
     let user = interaction.user;
     let removeBirthdayCheck = await RemoveBirthday(user.id);
+    let message = "";
+
     if(removeBirthdayCheck){
-      interaction.reply(`Sorry to see you go ${user.username}! Your birthday has been removed.`);
+      message = messages.remove_birthday.confirmation_message.replace("{user}",`${user.username}`);      
     }else{
-      interaction.reply(`Sorry, ${user.username}! There was a problem with removing your birthday. Please contact the admins!`);
+      message = messages.remove_birthday.error_message.replace("{user}",`${user.username}`);
+    }
+    if(message!= ""){
+      interaction.reply(message);
     }
 }
 
 export async function updateBirthday(interaction,month,day,year){
   let user = interaction.user;
   let checkBirthday = await CheckBirthday(user.id);
+  let message = "";
   if(!checkBirthday){
-      interaction.reply(`Hello there ${user.username}! You have no biirthday to update! Add your birthday instead!`);
+    message = messages.update_birthday.no_birthday_message.replace("{user}",`${user.username}`);     
     } else {
       let addBirthdayCheck = await UpdateBirthday(user.id,month,day,year);
       if(addBirthdayCheck){
-        interaction.reply(`Hello there ${user.username}! I've updated your birthday as ${month}/${day}`);
+        message = messages.update_birthday.confirmation_message.replace("{user}",`${user.username}`);     
       } else {
-        interaction.reply(`Hello there ${user.username}! I've had an error and your birthday wasn't recorded.`);
+        message = messages.update_birthday.error_message.replace("{user}",`${user.username}`);  
       }
+    }
+    if(message!= ""){
+      interaction.reply(message);
     }
 }
 
 export async function showBirthday(interaction){
   let user = interaction.user;
   let checkBirthday = await CheckBirthday(user.id);
+  let message = "";
   if(checkBirthday){
     let birthday = await GetBirthday(user.id);
     let birthdayObj = JSON.parse(birthday);
     let formattedDate = format(parseISO(birthdayObj.birthtimestamp),"MMMM dd");
-    interaction.reply(`Hi ${user.username}! Your birthday is on ${formattedDate}!`);
+    message = messages.show_birthday.confirmation_message
+              .replace("{user}",`${user.username}`)    
+              .replace("{date}",`${formattedDate}`);  
   } else {
-    interaction.reply(`Sorry ${user.username}! Your birthday is not here!`);
+    message = messages.show_birthday.error_message.replace("{user}",`${user.username}`);  
+  }
+  if(message!= ""){
+    interaction.reply(message);
   }
 }
 
@@ -94,9 +114,7 @@ export async function sendMessageAndAssignRole(channel: TextChannel, users: Guil
     const min = 0;
     let max = messages.birthday_messages.length;
     let arbitrayNumber = Math.floor(Math.random() * (max - min) + min);
-    let message = messages.birthday_messages[arbitrayNumber].replace("{user}",`<@${userID}>`);
-    //channel.send(message)
-    console.log(message)
+    channel.send(messages.birthday_messages[arbitrayNumber].replace("{user}",`<@${userID}>`))
     member.roles.add(role);
 }
 

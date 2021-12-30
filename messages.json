@@ -5,5 +5,23 @@
     "You're older today than yesterday but younger than tomorrow, happy birthday {user}!",
     "Cheers on your birthday {user}! One step closer to adult underpants!",
     "You're how old {user}?! Better take that cake outdoors to light the candles! Have a very happy birthday."
-    ]
+    ],
+    "add_birthday":{
+        "duplicate_message":"Hello there {user}! Your birthday is already present!",
+        "confirmation_message":"Hello there {user}! Your birthday is now recorded!",
+        "error_message":"Hello there {user}! I've had an error and your birthday wasn't recorded."
+    },
+    "remove_birthday":{
+        "confirmation_message":"Sorry to see you go {user}! Your birthday has been removed.",
+        "error_message":"Sorry, {user}! There was a problem with removing your birthday. Please contact the admins!"
+    },
+    "update_birthday":{
+        "no_birthday_message":"Hello there {user}! You have no birthday to update! Add your birthday instead!",
+        "confirmation_message":"Hello there {user}! Your birthday has now been updated!",
+        "error_message":"Hello there {user}! I've had an error updating your birthday and your birthday wasn't updated."
+    },
+    "show_birthday":{
+        "confirmation_message":"Hi {user}! Your birthday is on {date}!",
+        "error_message":"Sorry {user}! Your birthday is not here!"
+    }
 }
