@@ -3,9 +3,9 @@
 
 
 ## DB Schema
-``CREATE TABLE birthdays(
+CREATE TABLE birthdays(
     id serial PRIMARY KEY,
     userid varchar (50) NOT NULL,
-    birthtimestamp date(25) NOT NULL,
-    updatedat timestamp NOT NULL
-);``
+    birthtimestamp date NOT NULL,
+    updatedate timestamp NOT NULL
+);
