@@ -10,6 +10,7 @@ const client = new Client({
       Intents.FLAGS.GUILDS,
       Intents.FLAGS.GUILD_MESSAGES,
       Intents.FLAGS.GUILD_MEMBERS,
+      Intents.FLAGS.GUILD_PRESENCES
      ],
      // If you only want to use global commands only, comment this line
      botGuilds: [(client) => client.guilds.cache.map((guild) => guild.id)]
@@ -24,12 +25,13 @@ client.once("ready", async () => {
   });
   await client.initApplicationPermissions(true);
   console.log("Bot started");
-  const channel = client.channels.cache.get(config.CHANNEL_ID) as TextChannel;
-  const guild = client.guilds.cache.get(config.GUILD_ID) as Guild;
-  const role = guild.roles.cache.get(config.ROLE_ID) as Role;
 
   var job = new CronJob('0 8 * * *', function () {
     (async () => {
+      const channel = await client.channels.fetch(config.CHANNEL_ID) as TextChannel;
+      const guild = await client.guilds.fetch(config.GUILD_ID) as Guild;
+      const role = await guild.roles.fetch(config.ROLE_ID) as Role;
+    
       removeBirthdayFromRole(role);
       celebrateBirthday(channel, guild.members, role);
     })();
