@@ -1,12 +1,14 @@
-import { config } from '../constants'
+import { dbConfig_path } from '../constants'
 import { Pool } from "pg"
 
+const dbConfig = (process.env.NODE_ENV === 'production') ? require(dbConfig_path) : require("../../"+dbConfig_path);
+
 let pool = new Pool({
-    user: config.DB_USERNAME,
-    host: config.DB_HOST,
-    database: config.DB_DATABASE,
-    password: config.DB_PASSWORD,
-    port: config.DB_PORT,
+    user: dbConfig.DB_USERNAME,
+    host: dbConfig.DB_HOST,
+    database: dbConfig.DB_DATABASE,
+    password: dbConfig.DB_PASSWORD,
+    port: dbConfig.DB_PORT,
 })
 
   export async function CheckBirthday(userID){

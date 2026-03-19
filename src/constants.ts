@@ -1,6 +1,3 @@
-export const filename: string = "config.json";
-export const config = require("../"+filename);
-export const messages = require("../messages.json");
-export const defaultConfig = {
-    BOT_TOKEN : "XXX"
-}
+export const dbConfig_path = "data/db-config.json";
+export const discordConfig_path = "data/discord-config.json";
+export const messages_path = "data/messages.json";

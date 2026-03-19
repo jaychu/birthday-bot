@@ -1,5 +1,5 @@
 import { 
-  messages 
+  messages_path 
 } from '../constants'
 
 import { 
@@ -22,6 +22,8 @@ import {
     GetBirthday,
     GetAllBirthdays
 } from "../helpers/queries";
+
+const messages = (process.env.NODE_ENV === 'production') ? require(messages_path) : require("../../"+messages_path);
 
 export async function addBirthday(interaction,month,day,year){
     let user = interaction.user;
