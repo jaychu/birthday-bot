@@ -1,4 +1,4 @@
-import { Guild, Intents, Role, TextChannel } from "discord.js";
+import { Guild, GatewayIntentBits , Role, TextChannel, Events } from "discord.js";
 import { CronJob } from "cron";
 import { Client } from "discordx";
 import { importx } from "@discordx/importer";
@@ -7,23 +7,20 @@ import { celebrateBirthday, removeBirthdayFromRole } from "./helpers/functions";
 
 const client = new Client({
      intents: [
-      Intents.FLAGS.GUILDS,
-      Intents.FLAGS.GUILD_MESSAGES,
-      Intents.FLAGS.GUILD_MEMBERS,
-      Intents.FLAGS.GUILD_PRESENCES
+      GatewayIntentBits.Guilds,
+      GatewayIntentBits.GuildMessages,
+      GatewayIntentBits.GuildMembers,
+      GatewayIntentBits.GuildPresences
      ],
      // If you only want to use global commands only, comment this line
      botGuilds: [(client) => client.guilds.cache.map((guild) => guild.id)]
 });
 
 
-client.once("ready", async () => {
+client.once(Events.ClientReady, async () => {
   await client.clearApplicationCommands();
-  await client.initApplicationCommands({
-    global: { log: true },
-    guild: { log: true },
-  });
-  await client.initApplicationPermissions(true);
+  await client.initApplicationCommands();
+  
   console.log("Bot started");
 
   var job = new CronJob('0 8 * * *', function () {
