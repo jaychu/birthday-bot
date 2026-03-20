@@ -1,0 +1,36 @@
+# Comments are provided throughout this file to help you get started.
+# If you need more help, visit the Docker Compose reference guide at
+# https://docs.docker.com/go/compose-spec-reference/
+
+# Here the instructions define your application as a service called "server".
+# This service is built from the Dockerfile in the current directory.
+# You can add other services your application may depend on here, such as a
+# database or a cache. For examples, see the Awesome Compose repository:
+# https://github.com/docker/awesome-compose
+services:
+  database:
+    image: postgres:15
+    restart: always
+    secrets:
+      - db-config 
+    environment:
+      CONFIG_PATH: /birthdaybot-config/db-config.json
+    volumes:
+      - birthdaybot-db:/var/lib/postgresql/data
+  bot:
+    build:
+      context: .
+    environment:
+      NODE_ENV: production
+    secrets:
+      - discord_token
+    volumes:
+      - birthdaybot-config:/birthdaybot-config
+    working_dir: /birthdaybot
+
+
+secrets:
+  discord_token:
+    file: ./birthdaybot-config/discord_token.txt
+  db-config:
+    file: ./birthdaybot-config/db-config.json

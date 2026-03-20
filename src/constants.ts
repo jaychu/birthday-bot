@@ -1,3 +1,3 @@
-export const dbConfig_path = "data/db-config.json";
-export const discordConfig_path = "data/discord-config.json";
-export const messages_path = "data/messages.json";
+export const dbConfig_path = (process.env.NODE_ENV === 'production') ? "/birthdaybot-config/db-config.json":"data/db-config.json";
+export const discordConfig_path = (process.env.NODE_ENV === 'production') ? "/birthdaybot-config/discord-config.json":"data/discord-config.json";
+export const messages_path = (process.env.NODE_ENV === 'production') ? "/birthdaybot-config/messages.json":"data/messages.json";
