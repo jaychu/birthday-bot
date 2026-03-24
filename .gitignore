@@ -4,6 +4,6 @@ node_modules/
 package-lock.json
 
 # Data files to ignore
-data/db-config.json
+data/birthdaybot.db
 data/discord_token.txt
 data/discord-config.json

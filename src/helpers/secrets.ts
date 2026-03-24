@@ -4,7 +4,7 @@ import fs from 'fs';
 export function getDiscordToken():string{    
   try {
     // Docker mounts secrets at this specific path
-    let discord_token_path = (process.env.NODE_ENV === 'production') ?'/birthdaybot-config/discord_token.txt' : 'data/discord_token.txt';
+    let discord_token_path = (process.env.NODE_ENV === 'production') ?'/birthdaybot-data/discord_token.txt' : 'data/discord_token.txt';
     return fs.readFileSync(discord_token_path, 'utf8').trim();
   } catch (err) {
     console.error("Could not find discord_token file in data/!");

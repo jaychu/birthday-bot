@@ -8,29 +8,18 @@
 # database or a cache. For examples, see the Awesome Compose repository:
 # https://github.com/docker/awesome-compose
 services:
-  database:
-    image: postgres:15
-    restart: always
-    secrets:
-      - db-config 
-    environment:
-      CONFIG_PATH: /birthdaybot-config/db-config.json
-    volumes:
-      - birthdaybot-db:/var/lib/postgresql/data
   bot:
     build:
       context: .
     environment:
-      NODE_ENV: production
+      - NODE_ENV: production
     secrets:
       - discord_token
     volumes:
-      - birthdaybot-config:/birthdaybot-config
+      - birthdaybot-data:/birthdaybot-data
     working_dir: /birthdaybot
 
 
 secrets:
   discord_token:
-    file: ./birthdaybot-config/discord_token.txt
-  db-config:
-    file: ./birthdaybot-config/db-config.json
+    file: ./birthdaybot-data/discord_token.txt
