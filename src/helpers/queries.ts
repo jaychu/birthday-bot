@@ -3,6 +3,7 @@ import { DatabaseSync } from 'node:sqlite';
 const path = require('node:path');
 
 const pathToDB = (process.env.NODE_ENV === 'production') ? db_path : path.resolve(__dirname+"../../../data","birthdaybot.db");
+console.log(pathToDB);
 const db = new DatabaseSync(pathToDB);
   export async function CheckBirthday(userID){
     return new Promise(function(resolve){

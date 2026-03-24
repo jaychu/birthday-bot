@@ -35,11 +35,12 @@ client.once(Events.ClientReady, async () => {
       celebrateBirthday(channel, guild.members, role);
     })();
   }, null, true, discordConfig.TIMEZONE);
-
+  console.log("Cron job loaded");
 });
 
 client.on("interactionCreate", (interaction) => {
   client.executeInteraction(interaction);
 });
+console.log("Commands directory:"+__dirname + "/commands/**/*.{js,ts}")
 importx(__dirname + "/commands/**/*.{js,ts}");
 client.login(getDiscordToken()); 
