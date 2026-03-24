@@ -5,7 +5,7 @@
 # https://docs.docker.com/go/dockerfile-reference/
 
 
-FROM node:20-bookworm-slim
+FROM node:24-bookworm-slim
 WORKDIR /birthdaybot
 COPY package*.json ./
 
