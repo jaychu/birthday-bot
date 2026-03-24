@@ -26,8 +26,7 @@
     "discord.js": "^14.25.1",
     "discordx": "^11.13.3",
     "fs": "^0.0.1-security",
-    "jsonfile": "^6.2.0",
-    "pg": "^8.20.0"
+    "jsonfile": "^6.2.0"
   },
   "devDependencies": {
     "@types/node": "^25.5.0",
