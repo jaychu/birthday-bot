@@ -38,20 +38,8 @@ client.once(Events.ClientReady, async () => {
       celebrateBirthday(channel, guild.members, role);
     })();
   }, null, true, discordConfig.TIMEZONE);
-  console.log("Cron job loaded");
-
-  await debug()
-
 });
 
 client.on("interactionCreate", (interaction) => {
   client.executeInteraction(interaction);
 });
-
-async function debug(){
-      const channel = await client.channels.fetch(discordConfig.CHANNEL_ID) as TextChannel;
-      const guild = await client.guilds.fetch(discordConfig.GUILD_ID) as Guild;
-      const role = await guild.roles.fetch(discordConfig.ROLE_ID) as Role;
-
-      channel.send("I have awaken!")
-}

@@ -38,6 +38,7 @@ abstract class AppDiscord {
       }) year: number,
       interaction: CommandInteraction
     ) {
+      console.log("Add Birthday Triggered!");
       addBirthday(interaction,month,day,year);
     }  
 
@@ -45,6 +46,7 @@ abstract class AppDiscord {
     remove(
       interaction: CommandInteraction
     ) {
+      console.log("Remove Birthday Triggered!")
       removeBirthday(interaction);
     }  
 
@@ -69,6 +71,7 @@ abstract class AppDiscord {
       }) year: number,
       interaction: CommandInteraction
     ) {
+      console.log("Update Birthday Triggered!")
       updateBirthday(interaction,month,day,year);
     }  
 
@@ -76,6 +79,7 @@ abstract class AppDiscord {
     show(
       interaction: CommandInteraction
     ) {
+      console.log("Show Birthday Triggered!")
       showBirthday(interaction);
     }  
 }
