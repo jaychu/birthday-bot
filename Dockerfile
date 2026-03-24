@@ -41,11 +41,11 @@ RUN [ -f /birthdaybot-data/discord-config.json ] echo "Existing config found!" |
 }
 EOF
 
-#RUN chown -R node:node /birthdaybot-data
+RUN chown -R node:node /birthdaybot-data
 # Use production node environment by default.
 ENV NODE_ENV production
 # Run the application as a non-root user.
-#USER node
+USER node
 
 # Run the application.
 CMD npm start
