@@ -5,6 +5,7 @@ import { importx } from "@discordx/importer";
 import { discordConfig_path } from './constants'
 import { celebrateBirthday, removeBirthdayFromRole } from "./helpers/functions";
 import { getDiscordToken } from "./helpers/secrets"
+importx(__dirname + "/commands/**/*.{js,ts}");
 
 const discordConfig = (process.env.NODE_ENV === 'production') ? require(discordConfig_path) : require("../"+discordConfig_path);
 const client = new Client({
@@ -18,6 +19,8 @@ const client = new Client({
      botGuilds: [(client) => client.guilds.cache.map((guild) => guild.id)]
 });
 
+
+client.login(getDiscordToken()); 
 
 client.once(Events.ClientReady, async () => {
   await client.clearApplicationCommands();
@@ -36,11 +39,19 @@ client.once(Events.ClientReady, async () => {
     })();
   }, null, true, discordConfig.TIMEZONE);
   console.log("Cron job loaded");
+
+  await debug()
+
 });
 
 client.on("interactionCreate", (interaction) => {
   client.executeInteraction(interaction);
 });
-console.log("Commands directory:"+__dirname + "/commands/**/*.{js,ts}")
-importx(__dirname + "/commands/**/*.{js,ts}");
-client.login(getDiscordToken()); 
+
+async function debug(){
+      const channel = await client.channels.fetch(discordConfig.CHANNEL_ID) as TextChannel;
+      const guild = await client.guilds.fetch(discordConfig.GUILD_ID) as Guild;
+      const role = await guild.roles.fetch(discordConfig.ROLE_ID) as Role;
+
+      channel.send("I have awaken!")
+}
