@@ -19,7 +19,7 @@ const db = new DatabaseSync(pathToDB);
     })
   }
 
-  export async function AddBirthday(userID,month,day,year){
+  export async function AddBirthday(userID:string, month:string, day:string, year:string){
     if(year == null){
         year = "1900";
     }
@@ -37,7 +37,7 @@ const db = new DatabaseSync(pathToDB);
     })
   }
 
-  export async function RemoveBirthday(userID){
+  export async function RemoveBirthday(userID:string){
     return new Promise(function(resolve){
             try{
                 let query =`DELETE FROM birthdays WHERE userid=${userID}`;
@@ -51,7 +51,7 @@ const db = new DatabaseSync(pathToDB);
     })
   }
 
-export async function UpdateBirthday(userID,month,day,year){
+export async function UpdateBirthday(userID:string, month:string, day:string, year:string){
     if(year == null){
         year = "1900";
     }
@@ -69,7 +69,7 @@ export async function UpdateBirthday(userID,month,day,year){
     })
   }
 
-  export async function GetBirthday(userID){
+  export async function GetBirthday(userID:string){
     return new Promise<string>(function(resolve){
         try{
             let query = `SELECT * FROM birthdays WHERE userID=?`;
@@ -84,28 +84,23 @@ export async function UpdateBirthday(userID,month,day,year){
   }
 
   export async function GetAllBirthdays(){
-    let doesUserExist = false;
-    return new Promise<string>(function(resolve, reject){
-        //const query = db.prepare(`SELECT * FROM birthdays`).all;
-        //console.log(query);
-/*         pool.query('SELECT * FROM birthdays', [], (error, results) => {
-            if (error) {
-               console.log(error);
-               doesUserExist = false;
-            }
-            try {
-                resolve(JSON.stringify(results.rows))
-            } catch ( e ){
-                reject(e)
-            }
-        }) */
+    return new Promise<string>(function(resolve){
+        try{
+            let query = `SELECT * FROM birthdays`
+            console.log(`Query Executed from GetAllBirthdays:${query}`)
+            let results = db.prepare(query).all();
+            resolve(JSON.stringify(results))
+        } catch (e){
+            console.log(e);
+            resolve("");
+        }
     })
   }
   
-  function updatedAtNow(){
+function updatedAtNow(){
     return new Date().toISOString();
-  }
+}
 
-  function dateFormat(year,month,day){
+function dateFormat(year:string, month:string, day:string){
     return new Date(`${year}-${month}-${day}`).toISOString().split('T')[0];
-  }
+}
