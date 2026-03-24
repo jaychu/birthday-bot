@@ -5,6 +5,7 @@ import {
   } from "discordx";
 import {
     CommandInteraction,
+    ApplicationCommandOptionType
   } from "discord.js";
 
 import {
@@ -16,20 +17,23 @@ import {
 
 @Discord()
 abstract class AppDiscord {
-    @Slash("add-birthdate")
+    @Slash({ description: "Add your birthday to the bot", name: "add-birthdate"})
     add(
-      @SlashOption("month", { 
+      @SlashOption({ 
+        name: "month",
         required: true,
-        type: "STRING",
+        type: ApplicationCommandOptionType.String,
         description:"Month of your birthday (MM)"
       }) month: number,
-      @SlashOption("day", { 
+      @SlashOption({ 
+        name: "day",
         required: true,
-        type: "STRING",
+        type: ApplicationCommandOptionType.String,
         description:"Day of your birthday (DD)"
       }) day: number,
-      @SlashOption("year", { 
-        type: "STRING",
+      @SlashOption({
+        name:"year", 
+        type: ApplicationCommandOptionType.String,
         description:"Year of your birthday (YYYY)"
       }) year: number,
       interaction: CommandInteraction
@@ -37,27 +41,30 @@ abstract class AppDiscord {
       addBirthday(interaction,month,day,year);
     }  
 
-    @Slash("remove-birthdate")
+    @Slash({ description: "Remove your birthday from the bot", name: "remove-birthdate"})
     remove(
       interaction: CommandInteraction
     ) {
       removeBirthday(interaction);
     }  
 
-    @Slash("update-birthdate")
+    @Slash({ description: "Update your birthday in the bot", name: "update-birthdate"})
     update(
-      @SlashOption("month", { 
+      @SlashOption({ 
+        name:"month",
         required: true,
-        type: "STRING",
+        type: ApplicationCommandOptionType.String,
         description:"Month of your birthday (MM)"
       }) month: number,
-      @SlashOption("day", { 
+      @SlashOption({ 
+        name:"day",
         required: true,
-        type: "STRING",
+        type: ApplicationCommandOptionType.String,
         description:"Day of your birthday (DD)"
       }) day: number,
-      @SlashOption("year", { 
-        type: "STRING",
+      @SlashOption({ 
+        name:"year",
+        type: ApplicationCommandOptionType.String,
         description:"Year of your birthday (YYYY)"
       }) year: number,
       interaction: CommandInteraction
@@ -65,7 +72,7 @@ abstract class AppDiscord {
       updateBirthday(interaction,month,day,year);
     }  
 
-    @Slash("show-birthdate")
+    @Slash({ description: "Show your birthday in the bot", name: "show-birthdate"})
     show(
       interaction: CommandInteraction
     ) {

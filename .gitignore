@@ -1,4 +1,9 @@
 build/
 node_modules/
 .env
-config.json
+package-lock.json
+
+# Data files to ignore
+data/birthdaybot.db
+data/discord_token.txt
+data/discord-config.json

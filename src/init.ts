@@ -1,14 +1,13 @@
 import jsonfile from 'jsonfile';
-import {filename,defaultConfig} from './constants'
+import {discordConfig_path} from './constants'
 
 console.log("beginning init sequence");
-jsonfile.readFile(filename)
+jsonfile.readFile(discordConfig_path)
 .then(value=>{
-    console.log("loading the following config values from:" + filename);
-    console.log(value);
+    console.log("Discord Config file found!" + discordConfig_path);
 })
 .catch(err=>{
     console.log(err);
-    console.log("File creation needed!");
-    jsonfile.writeFile(filename, defaultConfig);
+    console.log("Discord Config file needed!");
 });
+
