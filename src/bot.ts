@@ -5,7 +5,7 @@ import { importx } from "@discordx/importer";
 import { discordConfig_path } from './constants'
 import { celebrateBirthday, removeBirthdayFromRole } from "./helpers/functions";
 import { getDiscordToken } from "./helpers/secrets"
-importx(__dirname + "/commands/**/*.{js,ts}");
+
 
 const discordConfig = (process.env.NODE_ENV === 'production') ? require(discordConfig_path) : require("../"+discordConfig_path);
 const client = new Client({
@@ -24,6 +24,7 @@ client.login(getDiscordToken());
 
 client.once(Events.ClientReady, async () => {
   await client.clearApplicationCommands();
+  await importx(__dirname + "/commands/**/*.{js,ts}");
   await client.initApplicationCommands();
   
   console.log("Bot started");
