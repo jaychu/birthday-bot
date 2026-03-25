@@ -15,17 +15,18 @@ const client = new Client({
       GatewayIntentBits.GuildMembers,
       GatewayIntentBits.GuildPresences
      ],
+     silent: false,
      // If you only want to use global commands only, comment this line
      botGuilds: [(client) => client.guilds.cache.map((guild) => guild.id)]
+     
 });
 
-
+importx(__dirname + "/commands/**/*.{js,ts}");
 client.login(getDiscordToken()); 
 
 client.once(Events.ClientReady, async () => {
-  await client.clearApplicationCommands();
-  await importx(__dirname + "/commands/**/*.{js,ts}");
-  await client.initApplicationCommands();
+  void client.clearApplicationCommands(); 
+  void client.initApplicationCommands();
   
   console.log("Bot started");
 
