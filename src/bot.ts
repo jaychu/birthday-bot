@@ -1,4 +1,4 @@
-import { Guild, GatewayIntentBits , Role, TextChannel, Events } from "discord.js";
+import { Guild, GatewayIntentBits , Role, TextChannel, Events, type Interaction} from "discord.js";
 import { CronJob } from "cron";
 import { Client } from "discordx";
 import { importx } from "@discordx/importer";
@@ -21,12 +21,10 @@ const client = new Client({
      
 });
 
-importx(__dirname + "/commands/**/*.{js,ts}");
-client.login(getDiscordToken()); 
+start();
 
 client.once(Events.ClientReady, async () => {
-  void client.clearApplicationCommands(); 
-  void client.initApplicationCommands();
+  await client.initApplicationCommands();
   
   console.log("Bot started");
 
@@ -42,6 +40,11 @@ client.once(Events.ClientReady, async () => {
   }, null, true, discordConfig.TIMEZONE);
 });
 
-client.on("interactionCreate", (interaction) => {
+client.on("interactionCreate", (interaction: Interaction)  => {
   client.executeInteraction(interaction);
 });
+
+async function start() {
+  await importx(__dirname + "/commands/**/*.{js,ts}");
+  await client.login(getDiscordToken());
+}
